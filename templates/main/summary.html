@@ -18,6 +18,23 @@
 
     <br><br>
 
-    {% block table %}
-    {% endblock %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Site</th>
+                <th scope="col">A Value</th>
+                <th scope="col">B Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in site_category_data %}
+                <tr>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.a_value }}</td>
+                    <td>{{ data.b_value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
