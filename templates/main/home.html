@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Home</title>
-    </head>
-    <body>
-        Home
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+    Hello, Home!
+{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'sites' %}">Sites <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Summary</a>
+    </li>
+{% endblock %}
+
+{% block main %}
+    <h1>Sites</h1>
+    <div class="list-group">
+        {% for site_category in site_categories %}
+            <a href="{% url 'site-category-details' site_category.id %}" class="list-group-item list-group-item-action">{{ site_category.name }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
