@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
-from django.db.models import Sum, Avg
+from django.db.models import Sum
 from django.db import connection
 
 from .models import *
