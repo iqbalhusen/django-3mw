@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
 from django.db.models import Sum, Avg
+from django.db import connection
 
 from .models import *
 
@@ -46,16 +47,19 @@ def summary_avg(request):
     site_category_data = []
 
     for site_category in SiteCategory.objects.all():
-        avg_a_dict = Site.objects.filter(category=site_category).aggregate(Avg('a'))
-        avg_a = avg_a_dict[next(iter(avg_a_dict))]
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT AVG(a) FROM main_site WHERE category_id = %s;", [site_category.id])
+            row = cursor.fetchone()
+            avg_a = row[0]
 
-        avg_b_dict = Site.objects.filter(category=site_category).aggregate(Avg('b'))
-        avg_b = avg_b_dict[next(iter(avg_b_dict))]
+            cursor.execute("SELECT AVG(b) FROM main_site WHERE category_id = %s;", [site_category.id])
+            row = cursor.fetchone()
+            avg_b = row[0]
 
-        site_category_data.append({
-            'name': site_category.name,
-            'a_value': avg_a,
-            'b_value': avg_b
-        })
+            site_category_data.append({
+                'name': site_category.name,
+                'a_value': round(avg_a, 2) if avg_a else avg_a,
+                'b_value': round(avg_b, 2) if avg_b else avg_b
+            })
 
     return render(request, 'main/summary.html', {'site_category_data': site_category_data})
