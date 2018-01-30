@@ -6,6 +6,6 @@ django_3mw/development.py
 /ve/
 .swp
 *.ipynb
-/staticfiles/
+#/staticfiles/
 /media/
 *.log
