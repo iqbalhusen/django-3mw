@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'sites' %}">Sites</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'summary-sum' %}">Summary <span class="sr-only">(current)</span></a>
+    </li>
+{% endblock %}
+
+{% block main %}
+    <br>
+    <h1>Summary</h1>
+
+    <a class="btn btn-primary" href="{% url 'summary-sum' %}" role="button">Sum</a>
+    <a class="btn btn-primary" href="{% url 'summary-avg' %}" role="button">Average</a>
+
+    <br><br>
+
+    {% block table %}
+    {% endblock %}
+{% endblock %}
